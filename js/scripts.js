@@ -64,6 +64,22 @@
         $(this).removeClass("floating-label-form-group-with-focus");
       });
     });
+
+    // video hovering for portfolio buttons
+    let ffs=document.getElementById("ffs")
+
+    // PLay Video1 on hover
+    ffs.addEventListener("mouseenter", function() {
+      ffs.play();
+    });
+
+    // Pause Video1 on hover
+    ffs.addEventListener("mouseleave", function() {
+      ffs.pause();
+      ffs.currentTime = 0;
+    });
+
+    
   
   })(jQuery); // End of use strict
   

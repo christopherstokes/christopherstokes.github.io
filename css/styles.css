@@ -10159,12 +10159,17 @@ h3 {
     font-size: 1.5rem;
   }
 }
+
+video {
+  max-width: 100%;
+}
+
 .portfolio .portfolio-item {
   cursor: pointer;
   position: relative;
   display: block;
   max-width: 25rem;
-  border-radius: 0.5rem;
+  /* border-radius: 0.5rem; */
   overflow: hidden;
 }
 .portfolio .portfolio-item .portfolio-item-caption {
