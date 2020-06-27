@@ -1,3 +1,5 @@
+$("#contactForm input,#contactForm textarea,#contactForm button").jqBootstrapValidation({preventSubmit: true})
+
 window.addEventListener("DOMContentLoaded", function() {
 
     // get the form elements defined in your form HTML above
