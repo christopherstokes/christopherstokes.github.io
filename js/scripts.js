@@ -67,6 +67,7 @@
 
     // video hovering for portfolio buttons
     let ffs=document.getElementById("ffs")
+    let tc=document.getElementById("tc")
 
     // PLay Video1 on hover
     ffs.addEventListener("mouseenter", function() {
@@ -77,6 +78,17 @@
     ffs.addEventListener("mouseleave", function() {
       ffs.pause();
       ffs.currentTime = 0;
+    });
+
+    // PLay Video1 on hover
+    tc.addEventListener("mouseenter", function() {
+      tc.play();
+    });
+
+    // Pause Video1 on hover
+    tc.addEventListener("mouseleave", function() {
+      tc.pause();
+      tc.currentTime = 0;
     });
 
     
