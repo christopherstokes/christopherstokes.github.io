@@ -1,4 +1,12 @@
+// strategic addition
+// tiles that are worth multiplyers if filled with the right color
+// turns take points away at end of round
+// as game goes on, levels add new colors and increase board size
+// draw_board will be animated between colors
+
 let board = [];
+let draw_board = [];
+let animating = false;
 let board_wid;
 let colors = [
     [255, 0, 0, 255],
@@ -21,7 +29,7 @@ function flood_fill(x, y, t_col, col) {
     }
 
     board[x][y] = col;
-    
+
 
     flood_fill(x + 1, y, t_col, col);
     flood_fill(x - 1, y, t_col, col);
@@ -31,11 +39,11 @@ function flood_fill(x, y, t_col, col) {
 
 function board_clear() {
     let col;
-    for (let x=0; x<64; x++) {
-        for (let y=0; y<64; y++) {
-            if (x==0 && y==0) {
+    for (let x = 0; x < 64; x++) {
+        for (let y = 0; y < 64; y++) {
+            if (x == 0 && y == 0) {
                 col = board[x][y];
-            } else if (board[x][y]!=col) { 
+            } else if (board[x][y] != col) {
                 return false;
             }
         }
@@ -44,55 +52,101 @@ function board_clear() {
 }
 
 function button_click(col) {
-    if (!board_clear() && col != board[0][0]) {    
+    if (!board_clear() && col != board[0][0]) {
         let t_col = board[0][0];
         turns += 1;
-        document.getElementById("turns").innerHTML=turns;
+        document.getElementById("turns").innerHTML = turns;
         flood_fill(0, 0, t_col, col);
+        animating=false;
+        update_draw();
+    }
+}
+
+function update_draw() {
+    let clear = true;
+    for (let x = 0; x < 64; x++) {
+        for (let y = 0; y < 64; y++) {
+            let r = draw_board[x][y].r;
+            let g = draw_board[x][y].g;
+            let b = draw_board[x][y].b;
+
+            if (colors[board[x][y]] !== [r, g, b]) {
+                clear = false;
+                if (!animating) {
+                    board_color = colors[board[x][y]]
+                    TweenLite.to(draw_board[x][y], 1, {
+                        r: board_color[0]
+                    })
+                    TweenLite.to(draw_board[x][y], 1, {
+                        g: board_color[1]
+                    })
+                    TweenLite.to(draw_board[x][y], 1, {
+                        b: board_color[2]
+                    })
+                }
+
+
+            }
+        }
     }
 }
 
 function setup() {
-    board_wid=64;
-    if (windowWidth>=128) board_wid=128;
-    if (windowWidth>=256) board_wid=256;
-    if (windowWidth>=512) board_wid=512;
+    board_wid = 64;
+    if (windowWidth >= 128) board_wid = 128;
+    if (windowWidth >= 256) board_wid = 256;
+    if (windowWidth >= 512) board_wid = 512;
     createCanvas(board_wid, board_wid);
     for (let x = 0; x < 64; x++) {
         board[x] = []
+        draw_board[x] = []
         for (let y = 0; y < 64; y++) {
-            board[x][y] = Math.round(random(0, 2))
+            let col = Math.round(random(0, 2));
+            board[x][y] = col;
+            draw_board[x][y] = {
+                r: colors[col][0],
+                g: colors[col][1],
+                b: colors[col][2],
+            };
         }
     }
 }
 
 function windowResized() {
-    board_wid=64;
-    if (windowWidth>=128) board_wid=128;
-    if (windowWidth>=256) board_wid=256;
-    if (windowWidth>=512) board_wid=512;
-    resizeCanvas(board_wid,board_wid);
+    board_wid = 64;
+    if (windowWidth >= 128) board_wid = 128;
+    if (windowWidth >= 256) board_wid = 256;
+    if (windowWidth >= 512) board_wid = 512;
+    resizeCanvas(board_wid, board_wid);
 }
 
 function new_game() {
     for (let x = 0; x < 64; x++) {
         board[x] = []
+        draw_board[x] = []
         for (let y = 0; y < 64; y++) {
-            board[x][y] = Math.round(random(0, 2))
+            let col = Math.round(random(0, 2));
+            board[x][y] = col;
+            draw_board[x][y] = {
+                r: colors[col][0],
+                g: colors[col][1],
+                b: colors[col][2],
+            };
         }
     }
-    turns=0;
+    turns = 0;
 }
 
 function draw() {
     dt += deltaTime;
+
     background(0);
     for (let x = 0; x < 64; x++) {
         for (let y = 0; y < 64; y++) {
-            let col = colors[board[x][y]]
-            stroke(col)
-            fill(col)
-            square(x * (board_wid/64), y * (board_wid/64), board_wid/64)
+            let col = draw_board[x][y];
+            stroke([col.r, col.g, col.b])
+            fill([col.r, col.g, col.b])
+            square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
         }
     }
 
