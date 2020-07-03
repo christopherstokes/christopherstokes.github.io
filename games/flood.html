@@ -1,10 +1,21 @@
 <html>
-  <head>
+<head>
+
+    <style>
+        body {background: #000;}
+        canvas {width:100% !important; height: auto !important;}
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
     <script src="flood.js"></script>
-  </head>
-  <body>
+</head>
+
+<body>
     <main>
+        <button onclick="button_click(0);" id="red">red</button>
+        <button onclick="button_click(1);" id="blue">green</button>
+        <button onclick="button_click(2);" id="green">blue</button>
     </main>
-  </body>
+</body>
+
 </html>
