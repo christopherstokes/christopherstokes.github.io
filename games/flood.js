@@ -13,7 +13,7 @@ function flood_fill(x, y, t_col, col) {
         return;
     }
     if (board[x][y] == col) {
-        curr_sel.push({x:x,y:y})
+        // curr_sel.push({x:x,y:y})
         return;
     }
 
@@ -22,7 +22,7 @@ function flood_fill(x, y, t_col, col) {
     }
 
     board[x][y] = col;
-    curr_sel.push({x:x,y:y});
+    // curr_sel.push({x:x,y:y});
     
 
     flood_fill(x + 1, y, t_col, col);
@@ -31,11 +31,28 @@ function flood_fill(x, y, t_col, col) {
     flood_fill(x, y - 1, t_col, col);
 }
 
+function board_clear() {
+    let col;
+    for (let x=0; x<64; x++) {
+        for (let y=0; y<64; y++) {
+            if (x==0 && y==0) {
+                col = board[x][y];
+            } else if (board[x][y]!=col) { 
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
 function button_click(col) {
-    let t_col = board[0][0];
-    turns += 1;
-    curr_sel = [];
-    flood_fill(0, 0, t_col, col);
+    if (!board_clear()) {    
+        let t_col = board[0][0];
+        turns += 1;
+        document.getElementById("turns").innerHTML=turns;
+        // curr_sel = [];
+        flood_fill(0, 0, t_col, col);
+    }
 }
 
 function setup() {
@@ -58,6 +75,10 @@ function draw() {
             fill(col)
             square(x * 8, y * 8, 8)
         }
+    }
+
+    if (board_clear()) {
+
     }
 
     // if (dt % 1000 > 900) {
