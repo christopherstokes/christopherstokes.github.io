@@ -47,11 +47,10 @@ function board_clear() {
 }
 
 function button_click(col) {
-    if (!board_clear()) {    
+    if (!board_clear() && col != board[0][0]) {    
         let t_col = board[0][0];
         turns += 1;
         document.getElementById("turns").innerHTML=turns;
-        // curr_sel = [];
         flood_fill(0, 0, t_col, col);
     }
 }
