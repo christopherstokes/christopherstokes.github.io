@@ -6,6 +6,7 @@
 
 let board = [];
 let draw_board = [];
+let special_tiles = [];
 let animating = false;
 let board_wid;
 let colors = [
@@ -14,22 +15,31 @@ let colors = [
     [0, 0, 255, 255]
 ];
 let turns = 0;
+let points = 0;
+let fill_points = 0;
 let dt = 0;
+let multiplyer = 1;
 
 function flood_fill(x, y, t_col, col) {
     if (board[x] == undefined) {
         return;
     }
-    if (board[x][y] == col) {
+    if (board[x][y] == col && !special_tiles[x][y]) {
         return;
     }
 
-    if (board[x][y] != t_col) {
+    if (board[x][y] != t_col && !special_tiles[x][y]) {
         return;
     }
 
     board[x][y] = col;
+    fill_points += 1;
 
+    if (special_tiles[x][y] && special_tiles[x][y] == col) {
+        multiplyer+=1;
+    }
+
+    special_tiles[x][y]=null
 
     flood_fill(x + 1, y, t_col, col);
     flood_fill(x - 1, y, t_col, col);
@@ -54,10 +64,16 @@ function board_clear() {
 function button_click(col) {
     if (!board_clear() && col != board[0][0]) {
         let t_col = board[0][0];
-        turns += 1;
-        document.getElementById("turns").innerHTML = turns;
+        fill_points = 0;
+        multiplyer = 1;
+
         flood_fill(0, 0, t_col, col);
-        animating=false;
+        turns += 1;
+        points += (fill_points - points) * multiplyer;
+        document.getElementById("turns").innerHTML = turns;
+        document.getElementById("points").innerHTML = points;
+        document.getElementById("multiplyer").innerHTML = multiplyer;
+        animating = false;
         update_draw();
     }
 }
@@ -74,13 +90,13 @@ function update_draw() {
                 clear = false;
                 if (!animating) {
                     board_color = colors[board[x][y]]
-                    TweenLite.to(draw_board[x][y], 1, {
+                    TweenLite.to(draw_board[x][y], .75, {
                         r: board_color[0]
                     })
-                    TweenLite.to(draw_board[x][y], 1, {
+                    TweenLite.to(draw_board[x][y], .75, {
                         g: board_color[1]
                     })
-                    TweenLite.to(draw_board[x][y], 1, {
+                    TweenLite.to(draw_board[x][y], .75, {
                         b: board_color[2]
                     })
                 }
@@ -97,19 +113,7 @@ function setup() {
     if (windowWidth >= 256) board_wid = 256;
     if (windowWidth >= 512) board_wid = 512;
     createCanvas(board_wid, board_wid);
-    for (let x = 0; x < 64; x++) {
-        board[x] = []
-        draw_board[x] = []
-        for (let y = 0; y < 64; y++) {
-            let col = Math.round(random(0, 2));
-            board[x][y] = col;
-            draw_board[x][y] = {
-                r: colors[col][0],
-                g: colors[col][1],
-                b: colors[col][2],
-            };
-        }
-    }
+    new_game();
 }
 
 function windowResized() {
@@ -124,17 +128,26 @@ function new_game() {
     for (let x = 0; x < 64; x++) {
         board[x] = []
         draw_board[x] = []
+        special_tiles[x] = []
         for (let y = 0; y < 64; y++) {
             let col = Math.round(random(0, 2));
             board[x][y] = col;
+
             draw_board[x][y] = {
                 r: colors[col][0],
                 g: colors[col][1],
                 b: colors[col][2],
             };
+
+            if (random() > 0.99) {
+                special_tiles[x][y]=col;
+            } else {
+                special_tiles[x][y]=null;
+            }
         }
     }
     turns = 0;
+    points = 0;
 }
 
 function draw() {
@@ -147,6 +160,12 @@ function draw() {
             stroke([col.r, col.g, col.b])
             fill([col.r, col.g, col.b])
             square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
+
+            if (special_tiles[x][y] && dt%1000>500) {
+                stroke(255)
+                fill(255)
+                square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
+            }
         }
     }
 
