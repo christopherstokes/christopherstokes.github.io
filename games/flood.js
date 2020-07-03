@@ -6,7 +6,6 @@ let colors = [
     [0, 0, 255, 255]
 ];
 let turns = 0;
-let curr_sel = [];
 let dt = 0;
 
 function flood_fill(x, y, t_col, col) {
@@ -14,7 +13,6 @@ function flood_fill(x, y, t_col, col) {
         return;
     }
     if (board[x][y] == col) {
-        // curr_sel.push({x:x,y:y})
         return;
     }
 
@@ -23,7 +21,6 @@ function flood_fill(x, y, t_col, col) {
     }
 
     board[x][y] = col;
-    // curr_sel.push({x:x,y:y});
     
 
     flood_fill(x + 1, y, t_col, col);
@@ -102,12 +99,4 @@ function draw() {
     if (board_clear()) {
         // gameover
     }
-
-    // if (dt % 1000 > 900) {
-    //     for (let i = 0; i < curr_sel.length; i++) {
-    //         stroke(255)
-    //         fill(255)
-    //         square(curr_sel[i].x * 8, curr_sel[i].y * 8, 8)
-    //     }
-    // }
 }
