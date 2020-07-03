@@ -5,12 +5,13 @@
     <style>
         body {background: #000;}
         canvas {display:block;margin:15px auto;}
-        #score {color: #fff;margin: 0px 15px;}
-        main {text-align: center;}
+        #score {color: #fff;font-size:1.5em;vertical-align:bottom; float:right; margin-top: 0.5em;}
+        main { display:block; max-width:85%; margin:0 auto;}
         button {padding: 1em; border: none;}
         #red {background: #ff0000;}
         #green {background: #00ff00;}
         #blue {background: #0000ff;}
+        #red,#green,#blue {padding:1.5em;}
     </style>
 
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
@@ -19,11 +20,13 @@
 
 <body>
     <main>
-        <button onclick="button_click(0);" id="red"></button>
-        <button onclick="button_click(1);" id="green"></button>
-        <button onclick="button_click(2);" id="blue"></button>
+        <span id="buttons">
+            <button onclick="button_click(0);" id="red"></button>
+            <button onclick="button_click(1);" id="green"></button>
+            <button onclick="button_click(2);" id="blue"></button>
+        </span>
         <span id="score">Turns: <span id="turns">0</span></span>
-        <button onclick="new_game();" id="newGame">new game</button>
+        <!-- <button onclick="new_game();" id="newGame">new game</button> -->
     </main>
 </body>
 
