@@ -165,6 +165,11 @@ function draw() {
                 fill(255)
                 square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
             }
+            if (special_tiles[x][y] && dt % 1000 <= 500) {
+                stroke(colors[special_tiles[x][y]])
+                fill(colors[special_tiles[x][y]])
+                square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
+            }
         }
     }
 
