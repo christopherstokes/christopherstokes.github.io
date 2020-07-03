@@ -69,6 +69,14 @@ function setup() {
     }
 }
 
+function windowResized() {
+    board_wid=64;
+    if (windowWidth>=128) board_wid=128;
+    if (windowWidth>=256) board_wid=256;
+    if (windowWidth>=512) board_wid=512;
+    resizeCanvas(board_wid,board_wid);
+}
+
 function new_game() {
     for (let x = 0; x < 64; x++) {
         board[x] = []
