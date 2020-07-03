@@ -1,4 +1,5 @@
 let board = [];
+let board_wid;
 let colors = [
     [255, 0, 0, 255],
     [0, 255, 0, 255],
@@ -56,7 +57,11 @@ function button_click(col) {
 }
 
 function setup() {
-    createCanvas(512, 512);
+    board_wid=64;
+    if (windowWidth>=128) board_wid=128;
+    if (windowWidth>=256) board_wid=256;
+    if (windowWidth>=512) board_wid=512;
+    createCanvas(board_wid, board_wid);
     for (let x = 0; x < 64; x++) {
         board[x] = []
         for (let y = 0; y < 64; y++) {
@@ -73,12 +78,12 @@ function draw() {
             let col = colors[board[x][y]]
             stroke(col)
             fill(col)
-            square(x * 8, y * 8, 8)
+            square(x * (board_wid/64), y * (board_wid/64), board_wid/64)
         }
     }
 
     if (board_clear()) {
-
+        // gameover
     }
 
     // if (dt % 1000 > 900) {
