@@ -34,6 +34,7 @@ function flood_fill(x, y, t_col, col) {
 function button_click(col) {
     let t_col = board[0][0];
     turns += 1;
+    curr_sel = [];
     flood_fill(0, 0, t_col, col);
 }
 
@@ -59,11 +60,11 @@ function draw() {
         }
     }
 
-    if (dt % 1000 > 500) {
-        for (let i = 0; i < curr_sel.length; i++) {
-            stroke(255)
-            fill(255)
-            square(curr_sel[i].x * 8, curr_sel[i].y * 8, 8)
-        }
-    }
+    // if (dt % 1000 > 900) {
+    //     for (let i = 0; i < curr_sel.length; i++) {
+    //         stroke(255)
+    //         fill(255)
+    //         square(curr_sel[i].x * 8, curr_sel[i].y * 8, 8)
+    //     }
+    // }
 }
