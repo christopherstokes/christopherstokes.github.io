@@ -35,11 +35,10 @@ function flood_fill(x, y, t_col, col) {
     board[x][y] = col;
     fill_points += 1;
 
-    if (special_tiles[x][y] && special_tiles[x][y] == col) {
-        multiplyer+=1;
+    if (special_tiles[x][y] == board[x][y]) {
+        multiplyer +=1;
     }
-
-    special_tiles[x][y]=null
+    special_tiles[x][y]=null;
 
     flood_fill(x + 1, y, t_col, col);
     flood_fill(x - 1, y, t_col, col);
@@ -69,17 +68,19 @@ function button_click(col) {
 
         flood_fill(0, 0, t_col, col);
         turns += 1;
+
         points += (fill_points - points) * multiplyer;
+
         document.getElementById("turns").innerHTML = turns;
         document.getElementById("points").innerHTML = points;
         document.getElementById("multiplyer").innerHTML = multiplyer;
+
         animating = false;
         update_draw();
     }
 }
 
 function update_draw() {
-    let clear = true;
     for (let x = 0; x < 64; x++) {
         for (let y = 0; y < 64; y++) {
             let r = draw_board[x][y].r;
@@ -87,7 +88,6 @@ function update_draw() {
             let b = draw_board[x][y].b;
 
             if (colors[board[x][y]] !== [r, g, b]) {
-                clear = false;
                 if (!animating) {
                     board_color = colors[board[x][y]]
                     TweenLite.to(draw_board[x][y], .75, {
@@ -132,7 +132,6 @@ function new_game() {
         for (let y = 0; y < 64; y++) {
             let col = Math.round(random(0, 2));
             board[x][y] = col;
-
             draw_board[x][y] = {
                 r: colors[col][0],
                 g: colors[col][1],
@@ -140,9 +139,9 @@ function new_game() {
             };
 
             if (random() > 0.99) {
-                special_tiles[x][y]=col;
+                special_tiles[x][y] = col;
             } else {
-                special_tiles[x][y]=null;
+                special_tiles[x][y] = null;
             }
         }
     }
@@ -161,7 +160,7 @@ function draw() {
             fill([col.r, col.g, col.b])
             square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
 
-            if (special_tiles[x][y] && dt%1000>500) {
+            if (special_tiles[x][y] && dt % 1000 > 500) {
                 stroke(255)
                 fill(255)
                 square(x * (board_wid / 64), y * (board_wid / 64), board_wid / 64)
