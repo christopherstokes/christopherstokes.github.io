@@ -69,6 +69,16 @@ function setup() {
     }
 }
 
+function new_game() {
+    for (let x = 0; x < 64; x++) {
+        board[x] = []
+        for (let y = 0; y < 64; y++) {
+            board[x][y] = Math.round(random(0, 2))
+        }
+    }
+    turns=0;
+}
+
 function draw() {
     dt += deltaTime;
     background(0);
