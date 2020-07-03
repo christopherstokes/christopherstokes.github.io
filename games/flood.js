@@ -25,7 +25,7 @@ function button_click(col) {
 }
 
 function setup() {
-    createCanvas(256, 256);
+    createCanvas(512, 512);
     for (let x=0;x<64;x++) {
         board[x]=[]
         for (let y=0;y<64;y++) {
@@ -41,7 +41,7 @@ function draw() {
             let col=colors[board[x][y]]
             stroke(col)
             fill(col)
-            square(x*4,y*4,4)
+            square(x*8,y*8,8)
         }
     }
 }
