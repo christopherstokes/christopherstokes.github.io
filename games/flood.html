@@ -33,15 +33,15 @@
         }
 
         #red {
-            background: #ff0000;
+            background: #d04648;
         }
 
         #green {
-            background: #00ff00;
+            background: #6daa2c;
         }
 
         #blue {
-            background: #0000ff;
+            background: #597dce;
         }
 
         #red,
@@ -49,9 +49,14 @@
         #blue {
             padding: 1.5em;
         }
+
+        video {
+            display: none;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.3.4/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.js"></script>
+    <script src="canvas-recorder.js"></script>
     <script src="flood.js"></script>
 </head>
 
@@ -65,6 +70,11 @@
         <span id="score">Points: <span id="points">0 </span> <sub><span id="multiplyer">1</span>x</sub> | Turns: <span id="turns">0</span></span>
         <!-- <button onclick="new_game();" id="newGame">new game</button> -->
     </main>
+    <video></video>
+    <!-- <div id="recorder-buttons">
+        <button onclick="start_recording();" id="start-record">Record</button>
+        <button onclick="stop_recording();" id="stop-record">Stop</button>
+    </div> -->
 </body>
 
 </html>
