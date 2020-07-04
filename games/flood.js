@@ -10,9 +10,11 @@ let special_tiles = [];
 let animating = false;
 let board_wid;
 let colors = [
-    [255, 0, 0, 255],
-    [0, 255, 0, 255],
-    [0, 0, 255, 255]
+    [208, 70, 72, 255],
+    [109, 170, 44, 255],
+    [89, 125, 206, 206],
+    [252, 227, 115, 255],
+    [252, 227, 115, 255],
 ];
 let turns = 0;
 let points = 0;
@@ -90,13 +92,13 @@ function update_draw() {
             if (colors[board[x][y]] !== [r, g, b]) {
                 if (!animating) {
                     board_color = colors[board[x][y]]
-                    TweenLite.to(draw_board[x][y], .75, {
+                    TweenLite.to(draw_board[x][y], .5+(x/16)+(y/16), {
                         r: board_color[0]
                     })
-                    TweenLite.to(draw_board[x][y], .75, {
+                    TweenLite.to(draw_board[x][y], .5+(x/16)+(y/16), {
                         g: board_color[1]
                     })
-                    TweenLite.to(draw_board[x][y], .75, {
+                    TweenLite.to(draw_board[x][y], .5+(x/16)+(y/16), {
                         b: board_color[2]
                     })
                 }
@@ -114,6 +116,7 @@ function setup() {
     if (windowWidth >= 512) board_wid = 512;
     createCanvas(board_wid, board_wid);
     new_game();
+    setup_recorder();
 }
 
 function windowResized() {
@@ -147,6 +150,15 @@ function new_game() {
     }
     turns = 0;
     points = 0;
+}
+
+function keyPressed() {
+    if (keyCode === 119) {
+        start_recording();
+    }
+    if (keyCode === 120) {
+        stop_recording();
+    }
 }
 
 function draw() {
